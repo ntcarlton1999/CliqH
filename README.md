@@ -1,93 +1,36 @@
-# CliqH — AI Healthcare Facility Matcher
+# CliqH
 
-**Ready-to-use** cross-platform healthcare app connecting patients with facilities via AI symptom triage, geolocation matching, and cost estimation.
+A deployable, responsive healthcare access app for symptom guidance and nearby facility discovery.
 
-## Quick start (one command)
+**This app provides general information, not a diagnosis.** For severe or life-threatening symptoms, contact local emergency services immediately.
 
-```powershell
-.\start.bat
-```
+## Run locally
 
-Or manually:
-
-```powershell
-# Terminal 1 — API
-.\.venv\Scripts\Activate.ps1
+```bash
+python -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
-python scripts\seed_data.py --seed
-uvicorn src.backend.main:app --reload --port 8000
-
-# Terminal 2 — Web app
-cd src\frontend
-npm install
-npm run dev
+uvicorn app.main:app --host 0.0.0.0 --port 8000
 ```
 
-Open **http://localhost:5173** in your browser.
+Open **http://localhost:8000**. API documentation is at **http://localhost:8000/docs**.
 
-## What's included
+## Docker
 
-| Component | Status | URL |
-|-----------|--------|-----|
-| **Web app** (React) | Ready | http://localhost:5173 |
-| **API** (FastAPI) | Ready | http://localhost:8000/docs |
-| **Mobile** (Flutter) | Code ready — needs Flutter SDK | See `mobile/README.md` |
-
-## User flows
-
-1. **Home** → Browse features and stats
-2. **Register / Login** → Create patient account
-3. **Symptom checker** → Enter symptoms → AI triage with urgency levels
-4. **Find facilities** → GPS-based nearby list (falls back to Nairobi demo coords)
-5. **Facility detail** → Cost estimate breakdown
-6. **Register facility** → Providers can submit facilities (requires login)
-
-## Demo data
-
-3 verified Nairobi facilities are seeded automatically:
-- Nairobi General Clinic
-- Westlands Care Center
-- Karen Community Hospital
-
-## Configuration
-
-Copy `.env.example` to `.env`:
-
-```env
-SECRET_KEY=your-secret-key
-OPENAI_API_KEY=sk-...   # Optional — enables LLM triage
-DATABASE_URL=sqlite:///./cliqh.db
+```bash
+export SECRET_KEY="$(python -c 'import secrets; print(secrets.token_urlsafe(48))')"
+docker compose up --build
 ```
 
-Without `OPENAI_API_KEY`, rule-based triage is used (still fully functional).
+## Tests
 
-## Mobile app
-
-Install [Flutter SDK](https://docs.flutter.dev/get-started/install), then:
-
-```powershell
-cd mobile
-flutter create . --project-name cliqh_mobile
-flutter pub get
-flutter run --dart-define=API_BASE_URL=http://10.0.2.2:8000
+```bash
+pytest -q
 ```
 
-## API examples
+## Production
 
-```powershell
-# Triage
-curl -X POST http://localhost:8000/v1/triage/diagnose -H "Content-Type: application/json" -d "{\"symptoms\":[\"fever\",\"cough\"]}"
-
-# Nearby facilities
-curl "http://localhost:8000/v1/facilities/nearby?lat=-1.2921&lon=36.8219"
-
-# Cost estimate
-curl "http://localhost:8000/v1/facilities/1/cost-estimate?condition=influenza"
-```
-
-## Tech stack
-
-- **Backend:** FastAPI, SQLAlchemy, SQLite (Postgres via Docker)
-- **Web:** React, Vite, Tailwind CSS, TanStack Query
-- **Mobile:** Flutter, Riverpod, Dio
-- **AI:** OpenAI GPT-4o-mini (optional) + rule-based fallback
+- Set `SECRET_KEY` to a strong unique value.
+- Set `ALLOWED_ORIGINS` to the deployed HTTPS origin.
+- Serve only over HTTPS.
+- Replace demo facilities with verified, authorized facility data before launch.

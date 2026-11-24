@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0f766e">
+  <meta name="description" content="Symptom guidance and nearby healthcare facility discovery.">
+  <title>CliqH — Healthcare made simple</title>
+  <link rel="manifest" href="/static/manifest.json">
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <header class="nav">
+    <a class="brand" href="#top"><span class="brand-mark">+</span><span>CliqH</span></a>
+    <nav aria-label="Primary navigation">
+      <a href="#symptoms">Symptom check</a>
+      <a href="#facilities">Facilities</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">Healthcare access</p>
+        <h1>Understand symptoms. Find care nearby.</h1>
+        <p class="hero-copy">Get general guidance, explore facility options, and view estimated service costs in Kenyan shillings.</p>
+        <div class="actions">
+          <a class="button primary" href="#symptoms">Check symptoms</a>
+          <a class="button secondary" href="#facilities">Browse facilities</a>
+        </div>
+        <p class="notice"><strong>Not a diagnosis.</strong> For severe or life-threatening symptoms, contact local emergency services immediately.</p>
+      </div>
+      <div class="hero-card" aria-label="Service summary">
+        <div class="pulse">+</div>
+        <h2>Guidance in minutes</h2>
+        <ul>
+          <li>Private symptom check</li>
+          <li>Nearby facility matching</li>
+          <li>Transparent cost ranges</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="symptoms" class="section">
+      <div class="section-heading">
+        <p class="eyebrow">Symptom check</p>
+        <h2>Tell us what you’re experiencing</h2>
+      </div>
+      <form id="symptom-form" class="card form-grid">
+        <label>
+          Symptoms
+          <textarea name="symptoms" required minlength="3" maxlength="500" placeholder="For example: fever, cough, and headache"></textarea>
+        </label>
+        <fieldset>
+          <legend>Urgent symptoms</legend>
+          <div class="checkbox-grid">
+            <label><input type="checkbox" name="urgent" value="chest pain"> Chest pain</label>
+            <label><input type="checkbox" name="urgent" value="trouble breathing"> Trouble breathing</label>
+            <label><input type="checkbox" name="urgent" value="severe bleeding"> Severe bleeding</label>
+            <label><input type="checkbox" name="urgent" value="fainting"> Fainting or confusion</label>
+          </div>
+        </fieldset>
+        <button class="button primary" type="submit">Get guidance</button>
+      </form>
+      <div id="symptom-result" class="card result" hidden></div>
+    </section>
+
+    <section id="facilities" class="section">
+      <div class="section-heading">
+        <p class="eyebrow">Nearby care</p>
+        <h2>Find a facility</h2>
+      </div>
+      <form id="facility-form" class="card inline-form">
+        <label>Area
+          <input name="area" value="Nairobi" maxlength="100">
+        </label>
+        <label>Specialty
+          <select name="specialty">
+            <option value="">Any specialty</option>
+            <option value="general practice">General practice</option>
+            <option value="internal medicine">Internal medicine</option>
+            <option value="laboratory">Laboratory</option>
+          </select>
+        </label>
+        <button class="button primary" type="submit">Search</button>
+      </form>
+      <div id="facility-list" class="facility-grid"></div>
+    </section>
+
+    <section class="cta">
+      <h2>Healthcare access should feel clear.</h2>
+      <p>Browse demo facilities while coverage is expanded and verified.</p>
+    </section>
+  </main>
+
+  <footer>
+    <div><strong>CliqH</strong><p>General guidance and facility information.</p></div>
+    <div class="footer-links"><a href="/privacy">Privacy</a><a href="/terms">Terms</a></div>
+  </footer>
+
+  <script src="/static/app.js" defer></script>
+</body>
+</html>

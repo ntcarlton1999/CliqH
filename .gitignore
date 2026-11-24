@@ -2,24 +2,11 @@
 .venv/
 __pycache__/
 *.py[cod]
-*.db
 .env
-cliqh.db
-
-# Node
-node_modules/
-dist/
-*.local
-
-# Flutter
-mobile/.dart_tool/
-mobile/build/
-mobile/.flutter-plugins
-mobile/.flutter-plugins-dependencies
+*.db
 
 # IDE / OS
 .idea/
 .vscode/
-*.swp
 .DS_Store
 Thumbs.db

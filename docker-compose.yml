@@ -1,26 +1,9 @@
 services:
-  db:
-    image: postgres:16-alpine
-    environment:
-      POSTGRES_USER: cliqh
-      POSTGRES_PASSWORD: cliqh
-      POSTGRES_DB: cliqh
-    ports:
-      - "5432:5432"
-    volumes:
-      - cliqh_pg:/var/lib/postgresql/data
-
   api:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    environment:
-      DATABASE_URL: postgresql://cliqh:cliqh@db:5432/cliqh
-      SECRET_KEY: dev-secret-key
+    build: .
     ports:
       - "8000:8000"
-    depends_on:
-      - db
-
-volumes:
-  cliqh_pg:
+    environment:
+      SECRET_KEY: ${SECRET_KEY:?Set SECRET_KEY in the environment}
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-http://localhost:8000}
+    restart: unless-stopped
